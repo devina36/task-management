@@ -8,7 +8,7 @@ type TButtonProps = {
   loading?: boolean;
   disabled?: boolean;
   icon?: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button: React.FC<TButtonProps> = ({

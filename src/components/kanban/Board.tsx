@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useAtom } from 'jotai';
-import { Task } from '@/types/Task';
 import { Column } from './Column';
 import {
   isOpenConfirmAtom,
@@ -16,6 +15,7 @@ import {
 } from '@/atoms/taskAtom';
 import ModalConfirm from '../modal/ModalConfirm';
 import ModalDetail from '../modal/ModalDetail';
+import { ProgressLevel, Task } from '@/types/types';
 
 const Board = () => {
   const [tasks, setTasks] = useAtom(tasksAtom);
@@ -49,9 +49,9 @@ const Board = () => {
 
     newTasks.splice(projectIndex, 1);
 
-    const updatedProject = {
+    const updatedProject: Task = {
       ...projectTask,
-      progress: destination.droppableId,
+      progress: destination.droppableId as ProgressLevel,
     };
 
     newTasks.splice(destination.index, 0, updatedProject);
@@ -64,7 +64,7 @@ const Board = () => {
   };
 
   const handleDelete = () => {
-    const updateData = tasks.filter((item: Task) => item.id !== task.id);
+    const updateData = tasks.filter((item: Task) => item.id !== task?.id);
     setTasks(updateData);
   };
 

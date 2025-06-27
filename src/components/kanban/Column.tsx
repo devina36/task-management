@@ -4,35 +4,26 @@ import { Droppable } from '@hello-pangea/dnd';
 import { Plus, X } from 'lucide-react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
-import { ColumnProps } from '@/types/ColumnProps';
+import { ColumnProps, ProgressLevel, Task } from '@/types/types';
 import Button from '../button/Button';
 import { Card } from './Card';
 import { STORAGE_KEY, tasksAtom } from '@/atoms/taskAtom';
-
-const getColor = (progress: string) => {
-  switch (progress) {
-    case 'IN PROGRESS':
-      return 'text-blue-600 bg-blue-100';
-    case 'DONE':
-      return 'text-green-600 bg-green-100';
-    default:
-      return 'text-gray-500 bg-gray-200';
-  }
-};
+import useGlobalHooks from '@/hooks/useGlobalHooks';
 
 export const Column = ({ title, tasks, id }: ColumnProps) => {
+  const hook = useGlobalHooks();
   const [allTask, setAllTask] = useAtom(tasksAtom);
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
-  const color = getColor(title);
+  const color = hook.getColorProgress(id);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTask = {
-      id: `SM-${allTask.length + 1}`,
+    const newTask: Task = {
+      id: `SM-${hook.generateId()}`,
       title: value,
       description: '',
-      progress: id,
+      progress: id as ProgressLevel,
       priority: 'medium',
       isMark: false,
     };
@@ -48,7 +39,7 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
   };
 
   return (
-    <div className="flex flex-col w-[320px] bg-[#f5f7f9] rounded-lg px-2 py-4 h-fit">
+    <div className="flex flex-col min-w-[320px] w-[320px] bg-[#f5f7f9] rounded-lg px-2 py-4 h-fit">
       <div className="mb-4 ml-8 flex gap-3 items-center">
         <h2 className={`font-bold text-sm px-[2px] ${color} leading-none`}>
           {title}
@@ -86,7 +77,10 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
             <div className="flex gap-2 justify-end">
               <Button
                 type="button"
-                onClick={() => setIsCreate(false)}
+                onClick={() => {
+                  setIsCreate(false);
+                  setValue('');
+                }}
                 icon={<X size={20} />}
                 className="bg-gray-200 text-gray-600 w-fit hover:bg-gray-300 transition-all"
               />

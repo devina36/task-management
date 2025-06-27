@@ -1,4 +1,4 @@
-import { Task } from '@/types/Task';
+import { Task } from '@/types/types';
 import { atom } from 'jotai';
 
 const initialTasks: Task[] = [
@@ -20,11 +20,20 @@ const initialTasks: Task[] = [
   },
 ];
 
+const initialTask: Task = {
+  id: '',
+  title: '',
+  description: '',
+  progress: 'todo',
+  priority: 'medium',
+  isMark: false,
+};
+
 export const STORAGE_KEY = 'task-management';
 
 export const tasksAtom = atom<Task[]>(initialTasks);
 
-export const taskAtom = atom<Task>();
+export const taskAtom = atom<Task>(initialTask);
 
 export const isOpenConfirmAtom = atom<boolean>(false);
 
