@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management App
 
-## Getting Started
+Aplikasi manajemen tugas berbasis web dengan fitur drag-and-drop menggunakan Next.js dan TypeScript.
 
-First, run the development server:
+## Cara Menjalankan Aplikasi
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Prerequisites
+
+- Node.js (versi 18 atau lebih baru)
+- npm, yarn, atau pnpm
+
+### Langkah-langkah
+
+1. Clone repository atau download kode
+2. Buka terminal di folder project
+3. Install dependencies:
+   ```bash
+   npm install
+   # atau
+   yarn install
+   ```
+4. Jalankan aplikasi:
+   ```bash
+   npm run dev
+   # atau
+   yarn dev
+   ```
+5. Buka browser dan akses `http://localhost:3000`
+
+## Penjelasan Pendekatan Teknis
+
+### State Management
+
+- **Jotai**: Dipilih karena ringan dan mudah digunakan untuk aplikasi yang simpel
+- Atom-based state management yang memungkinkan state yang terisolasi dan mudah di-debug
+- Atoms terpisah untuk tasks, loading state, modal state, dll.
+
+### Storage Solution
+
+- **localStorage**: Menyimpan data tasks secara lokal di browser
+- Data otomatis tersimpan setiap ada perubahan (create, update, delete, drag-drop)
+- Fallback ke initial data jika localStorage kosong atau error
+
+### UI Components
+
+- **Tailwind CSS**: Untuk styling yang cepat dan konsisten
+- **Lucide React**: Icon library yang ringan dan modern
+- **@hello-pangea/dnd**: Library drag-and-drop yang stabil
+- Komponen modular dan reusable (Button, Badge, Modal, dll.)
+
+### Folder Structure
+
+```
+src/
+├── app/                 # Next.js App Router
+├── atoms/              # Jotai state atoms
+├── components/         # UI components
+│   ├── badge/         # Priority badge component
+│   ├── button/        # Reusable button component
+│   ├── kanban/        # Kanban board components
+│   └── modal/         # Modal components
+├── hooks/             # Custom hooks
+└── types/             # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Handling Data
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **CRUD Operations**: Create, Read, Update, Delete tasks
+- **Drag & Drop**: Mengubah status task dengan drag-drop antar kolom
+- **Real-time Updates**: Perubahan langsung tersimpan ke localStorage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Fitur Utama
 
-## Learn More
+- ✅ Drag and drop tasks antar kolom (TO DO → IN PROGRESS → DONE)
+- ✅ Create task baru di setiap kolom
+- ✅ Edit task title inline dan di modal detail
+- ✅ Delete task dengan konfirmasi
+- ✅ Mark task sebagai complete/incomplete
+- ✅ Set priority task (Low, Medium, High)
+- ✅ Modal detail untuk edit lengkap task
+- ✅ Data persist dengan localStorage
+- ✅ Loading state dan animasi
+- ✅ Responsive design
 
-To learn more about Next.js, take a look at the following resources:
+### Future Considerations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Advanced Features** (jika requirements berkembang):
+   - Due dates dan calendar integration
+   - Task dependencies (prerequisite tasks)
+   - Time tracking per task
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js 15 dengan App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: Jotai
+- **Drag & Drop**: @hello-pangea/dnd
+- **Icons**: Lucide React

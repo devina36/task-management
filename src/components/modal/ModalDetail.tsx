@@ -148,7 +148,9 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
+                placeholder="Enter a title"
                 className="min-h-[40px] h-[50px] outline-none p-2 w-full focus:ring-2 text-2xl border-2 border-gray-300 rounded-lg focus:ring-blue-500"
+                required
               />
 
               <div className="text-gray-800  flex flex-col gap-2">
@@ -158,6 +160,7 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
+                  placeholder="Add a more detailed description…"
                   className="min-h-[60px] h-[100px] outline-none p-2 w-full focus:ring-2 text-sm border-2 border-gray-300 rounded-lg focus:ring-blue-500"
                 />
               </div>
