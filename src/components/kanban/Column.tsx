@@ -51,7 +51,7 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={` rounded-lg min-h-[50px] ${
+            className={` rounded-lg min-h-[15px] ${
               snapshot.isDraggingOver ? 'bg-[#dadadf]' : ''
             }`}>
             {tasks.map((task, index) => (
