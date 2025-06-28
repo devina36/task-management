@@ -25,10 +25,10 @@ const Button: React.FC<TButtonProps> = ({
     <button
       type={type}
       className={twMerge(
-        `w-full h-[36px] gap-2 px-3 flex items-center justify-center cursor-pointer bg-blue-400 text-white font-semibold rounded-md whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed`,
+        `w-full h-[36px] gap-2 px-3 flex items-center justify-center cursor-pointer bg-blue-400 text-white font-semibold rounded-md whitespace-nowrap disabled:cursor-not-allowed`,
         className
       )}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       {...props}>
       {loading ? (

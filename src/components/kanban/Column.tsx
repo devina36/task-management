@@ -15,10 +15,12 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
   const [allTask, setAllTask] = useAtom(tasksAtom);
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const color = hook.getColorProgress(id);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const newTask: Task = {
       id: `SM-${hook.generateId()}`,
       title: value,
@@ -28,10 +30,13 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
       isMark: false,
     };
 
-    setAllTask([...allTask, newTask]);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...allTask, newTask]));
-    setValue('');
-    setIsCreate(false);
+    setTimeout(() => {
+      setAllTask([...allTask, newTask]);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...allTask, newTask]));
+      setValue('');
+      setIsCreate(false);
+      setLoading(false);
+    }, 1000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -39,7 +44,7 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
   };
 
   return (
-    <div className="flex flex-col min-w-[320px] w-[320px] bg-[#f5f7f9] rounded-lg px-2 py-4 h-fit">
+    <div className="flex flex-col min-w-[220px] w-[320px] bg-[#f5f7f9] rounded-lg px-2 py-4 h-fit">
       <div className="mb-4 ml-8 flex gap-3 items-center">
         <h2 className={`font-bold text-sm px-[2px] ${color} leading-none`}>
           {title}
@@ -81,12 +86,14 @@ export const Column = ({ title, tasks, id }: ColumnProps) => {
                   setIsCreate(false);
                   setValue('');
                 }}
+                disabled={loading}
                 icon={<X size={20} />}
                 className="bg-gray-200 text-gray-600 w-fit hover:bg-gray-300 transition-all"
               />
               <Button
                 type="submit"
                 disabled={!!value ? false : true}
+                loading={loading}
                 label={'Create'}
                 className="bg-blue-500 text-white w-fit px-4 hover:bg-blue-600 transition-all"
               />

@@ -34,6 +34,7 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
 
   const [, setIsOpenConfirm] = useAtom(isOpenConfirmAtom);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const color = hook.getColorProgress(task?.progress);
 
@@ -54,6 +55,7 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const updateTask: Task = {
       ...task,
       ...formData,
@@ -63,17 +65,20 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
       item.id === task.id ? updateTask : item
     );
 
-    setTasks(allupdate);
-    setTask(updateTask);
-    setIsEdit(false);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(allupdate));
+    setTimeout(() => {
+      setTasks(allupdate);
+      setTask(updateTask);
+      setIsEdit(false);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(allupdate));
+      setLoading(false);
+    }, 1000);
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed z-[99] inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-      <div className="bg-white rounded-xl w-full max-w-3xl px-3 relative ">
+      <div className="bg-white rounded-xl w-full max-w-sreen sm:max-w-3xl px-3 relative ">
         <div className=" absolute top-4 right-6">
           <button
             type="button"
@@ -188,12 +193,14 @@ const ModalDetail = ({ isOpen, onClose, task }: ModalDetailProps) => {
                       setIsEdit(false);
                       setFormData(initialData);
                     }}
+                    disabled={loading}
                     label={'Cancel'}
                     className="bg-gray-200 text-gray-600 w-[100px] hover:bg-gray-300 transition-all"
                   />
                   <Button
                     type="submit"
                     label={'Update'}
+                    loading={loading}
                     className="bg-blue-500 text-white w-[100px] px-4 hover:bg-blue-600 transition-all"
                   />
                 </div>

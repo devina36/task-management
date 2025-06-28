@@ -18,7 +18,7 @@ const ModalConfirm = ({
   title = 'Confirm',
   message = 'Are you sure want to do this?',
 }: ModalConfirmProps) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onConfirm = async () => {
     setLoading(true);

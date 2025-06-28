@@ -24,6 +24,7 @@ export const Card = ({ task, index }: CardProps) => {
   const [, setIsOpenConfirm] = useAtom(isOpenConfirmAtom);
   const [, setIsOpenDetail] = useAtom(isOpenDetailAtom);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updateTask: Task = {
@@ -41,6 +42,7 @@ export const Card = ({ task, index }: CardProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const updateTask: Task = {
       ...task,
       title: title,
@@ -50,9 +52,12 @@ export const Card = ({ task, index }: CardProps) => {
       item.id === task.id ? updateTask : item
     );
 
-    setTasks(allupdate);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(allupdate));
-    setIsEdit(false);
+    setTimeout(() => {
+      setTasks(allupdate);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(allupdate));
+      setIsEdit(false);
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -125,6 +130,7 @@ export const Card = ({ task, index }: CardProps) => {
                           type="submit"
                           disabled={!!title ? false : true}
                           label={'Update'}
+                          loading={loading}
                           className="bg-blue-500 text-white w-fit px-4 hover:bg-blue-600 transition-all"
                         />
                       </div>

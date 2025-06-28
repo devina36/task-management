@@ -34,6 +34,7 @@ const Board = () => {
 
     if (!destination) return;
 
+    // If the item is dropped in the same position
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -47,6 +48,7 @@ const Board = () => {
     const newTasks = Array.from(tasks);
     const projectIndex = tasks.findIndex((p: Task) => p.id === draggableId);
 
+    // Remove the task from its original position
     newTasks.splice(projectIndex, 1);
 
     const updatedProject: Task = {
@@ -54,7 +56,9 @@ const Board = () => {
       progress: destination.droppableId as ProgressLevel,
     };
 
+    // Insert the updated task into the new position
     newTasks.splice(destination.index, 0, updatedProject);
+
     setTasks(newTasks);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks));
   };
@@ -80,14 +84,16 @@ const Board = () => {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex gap-4">
-          <Column title="TO DO" tasks={getTaskByProgress('todo')} id="todo" />
-          <Column
-            title="IN PROGRESS"
-            tasks={getTaskByProgress('in-progress')}
-            id="in-progress"
-          />
-          <Column title="DONE" tasks={getTaskByProgress('done')} id="done" />
+        <div className="overflow-hidden w-[calc(100vw-48px)] xl:w-[calc(100vw-64px)]">
+          <div className="flex gap-4 overflow-x-auto w-full justify-center">
+            <Column title="TO DO" tasks={getTaskByProgress('todo')} id="todo" />
+            <Column
+              title="IN PROGRESS"
+              tasks={getTaskByProgress('in-progress')}
+              id="in-progress"
+            />
+            <Column title="DONE" tasks={getTaskByProgress('done')} id="done" />
+          </div>
         </div>
       </DragDropContext>
 

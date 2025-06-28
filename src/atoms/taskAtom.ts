@@ -3,7 +3,7 @@ import { atom } from 'jotai';
 
 const initialTasks: Task[] = [
   {
-    id: 'SM-1',
+    id: 'SM-251234567',
     title: 'Create 2 Instagram stories for week 10',
     description: 'des',
     progress: 'todo',
@@ -11,7 +11,7 @@ const initialTasks: Task[] = [
     isMark: true,
   },
   {
-    id: 'SM-2',
+    id: 'SM-251264563',
     title: 'Visit Hotel Mulia',
     description: 'des2',
     progress: 'todo',
